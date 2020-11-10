@@ -17,6 +17,8 @@ public:
         make_empty();
     }
     void push(const T& val) {
+        if (full())
+            throw("Stack Overflow!");
         node<T>* temp;
         temp = new node<T>;
         temp->data = val;
@@ -24,12 +26,16 @@ public:
         top_ptr = temp;
     }
     void pop() {
+        if (empty())
+            throw("Stack Underflow!");
         node<T>* temp;
         temp = top_ptr;
         top_ptr = top_ptr->next;
         delete temp;
     }
     T top() const {
+        if (empty())
+            throw("Stack is empty!");
         return top_ptr->data;
     }
     bool empty() const {
