@@ -1,74 +1,17 @@
-#include<iostream>
+#include"stack.h"
 #include<string>
-using namespace std;
-template<typename T>
-struct node {
-    T data;
-    node<T>* next;
-};
-template<typename T>
-class stack {
-    node<T>* top_ptr;
-public:
-    stack() {
-        top_ptr = NULL;
-    }
-    ~stack() {
-        make_empty();
-    }
-    void push(const T& val) {
-        if (full())
-            throw("Stack Overflow!");
-        node<T>* temp;
-        temp = new node<T>;
-        temp->data = val;
-        temp->next = top_ptr;
-        top_ptr = temp;
-    }
-    void pop() {
-        if (empty())
-            throw("Stack Underflow!");
-        node<T>* temp;
-        temp = top_ptr;
-        top_ptr = top_ptr->next;
-        delete temp;
-    }
-    T top() const {
-        if (empty())
-            throw("Stack is empty!");
-        return top_ptr->data;
-    }
-    bool empty() const {
-        return top_ptr == NULL;
-    }
-    bool full() const {
-        node<T>* temp;
-        temp = new node<T>;
-        if (temp == NULL)
-            return true;
-        else {
-            delete temp;
-            return false;
-        }
-    }
-    void make_empty() {
-        while (!empty()) {
-            pop();
-        }
-    }
-};
 bool is_operator(char x)
 {
     return (x == '+' || x == '-' || x == '*' || x == '/' || x == '^' || x == '%');
 }
 int prec_of_opr(char x)
 {
-    if (x == '^')
-        return 3;
+    if (x == '+' || x == '-')
+        return 1;
     else if (x == '*' || x == '/' || x == '%')
         return 2;
-    else if (x == '+' || x == '-')
-        return 1;
+    else if (x == '^')
+        return 3;
     else
         return 0;
 }
